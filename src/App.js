@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const API_URL = "http://lightsail.jiewen.wang:3001/quickswap"
+const API_URL = "https://lightsail.jiewen.wang:3001/quickswap"
 
 const INTERVAL = 20000
 
