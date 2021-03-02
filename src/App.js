@@ -6,6 +6,11 @@ const API_URL = "https://lightsail.jiewen.wang:3001/quickswap"
 
 const INTERVAL = 20000
 
+export function formatNumber(x) {
+  x = x.toFixed(3)
+  return x.toLocaleString()// toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+}
+
 async function fetch_prices() {
   var res = await fetch(API_URL)
   
@@ -70,13 +75,15 @@ function App() {
               </tr>
               {
                 Object.keys(priceData).map(key => (
-                    <tr>
+                    <tr style={{
+                      color: priceData[key].diff > 0.04 ? (priceData[key].diff > 0.08 ? 'yellow' : 'cyan') : 'white'
+                    }}>
                       <th>{key}</th>
-                      <th>{priceData[key].quickswap ? priceData[key].quickswap.token0Price : "None"}</th>
-                      <th>{priceData[key].uniswap ? priceData[key].uniswap.token0Price : "None"}</th>
-                      <th>{priceData[key].quickswap ? priceData[key].quickswap.token1Price : "None"}</th>
-                      <th>{priceData[key].uniswap ? priceData[key].uniswap.token1Price : "None"}</th>
-                      <th>{priceData[key].diff}</th>
+                      <th>{priceData[key].quickswap ? formatNumber(priceData[key].quickswap.token0Price) : "None"}</th>
+                      <th>{priceData[key].uniswap ? formatNumber(priceData[key].uniswap.token0Price) : "None"}</th>
+                      <th>{priceData[key].quickswap ? formatNumber(priceData[key].quickswap.token1Price) : "None"}</th>
+                      <th>{priceData[key].uniswap ? formatNumber(priceData[key].uniswap.token1Price) : "None"}</th>
+                      <th>{formatNumber(priceData[key].diff * 100).toString() + '%'}</th>
                     </tr>
                 ))
               }
